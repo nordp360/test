@@ -81,7 +81,7 @@ app.add_middleware(
 # 2. CORS Middleware
 origins = [
     "https://test-production-bf56f.up.railway.app",
-    "https://twoja-domena-frontendu.up.railway.app",
+    "https://frontend-production-e011.up.railway.app",
     "http://localhost:5173",
     "http://localhost:3000"
 ]
