@@ -1,10 +1,15 @@
-from __future__ import annotations
-
+import ssl
 from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
+
+# Create a secure SSL context that works with Railway/Cloud providers
+# We disable hostname check and cert verification for cloud compatibility
+ssl_context = ssl.create_default_context()
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
 
 engine = create_async_engine(
     settings.database_url,
@@ -15,7 +20,7 @@ engine = create_async_engine(
     pool_recycle=1800,     # Recycle connections every 30 minutes
     pool_pre_ping=True,    # Check connection health before use
     connect_args={
-        "ssl": True  # Force SSL for cloud connections
+        "ssl": ssl_context  # Use the custom SSL context
     }
 )
 
