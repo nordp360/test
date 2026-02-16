@@ -12,7 +12,7 @@ FROM nginx:stable-alpine
 # Kopiujemy zbudowane pliki
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Kopiujemy szablon konfiguracji
+# Kopiujemy szablon konfiguracji bezpośrednio do /
 COPY nginx.conf.template /nginx.conf.template
 
 # Konfiguracja środowiska
@@ -21,5 +21,8 @@ ENV BACKEND_URL=http://backend:8000
 
 EXPOSE 80
 
-# Start z podmianą zmiennych i debugowaniem konfiguracji
-CMD ["/bin/sh", "-c", "envsubst '$PORT $BACKEND_URL' < /nginx.conf.template > /etc/nginx/conf.d/default.conf && echo '--- GENERATED NGINX CONFIG START ---' && cat /etc/nginx/conf.d/default.conf && echo '--- GENERATED NGINX CONFIG END ---' && nginx -g 'daemon off;'"]
+# KLUCZOWE: Czyścimy ENTRYPOINT, aby uniknąć problematycznych skryptów obrazu Nginx
+ENTRYPOINT []
+
+# Ręczne wykonanie envsubst i uruchomienie Nginxa
+CMD ["/bin/sh", "-c", "envsubst '$PORT $BACKEND_URL' < /nginx.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
