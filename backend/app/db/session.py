@@ -14,6 +14,9 @@ engine = create_async_engine(
     pool_timeout=30,       # Wait up to 30 seconds for a connection
     pool_recycle=1800,     # Recycle connections every 30 minutes
     pool_pre_ping=True,    # Check connection health before use
+    connect_args={
+        "ssl": True  # Force SSL for cloud connections
+    }
 )
 
 AsyncSessionLocal = async_sessionmaker(
