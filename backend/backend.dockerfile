@@ -20,5 +20,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Skrypt startowy (czekanie na DB + migracje + uvicorn)
-CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT}
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"]
 # CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "main:app", "--bind", "0.0.0.0:8000"]
