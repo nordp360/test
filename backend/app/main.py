@@ -83,6 +83,7 @@ except Exception:
 
 # Add DDoS Protection Middleware
 app.add_middleware(
+    CORSMiddleware,
     DDoSProtectionMiddleware, 
     redis_client=redis_client,
     trusted_ips=settings.trusted_ips,
