@@ -15,14 +15,12 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 # Kopiujemy szablon konfiguracji
 COPY nginx.conf.template /nginx.conf.template
 
-# Konfiguracja środowiska
+# Ustawienia dla Railway
+ENV NGINX_ENVSUBST_FILTER='$PORT $BACKEND_URL'
 ENV PORT=80
 ENV BACKEND_URL=http://backend:8000
 
 EXPOSE 80
 
-# Skrypt startowy:
-# 1. Podmienia zmienne w locie (tylko te wymienione w parametrze envsubst)
-# 2. Wypisuje konfigurację do logów dla celów debugowania
-# 3. Uruchamia Nginx
-CMD ["/bin/sh", "-c", "envsubst '$PORT $BACKEND_URL' < /nginx.conf.template > /etc/nginx/conf.d/default.conf && echo 'Generated Nginx Config:' && cat /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+# Start z podmianą zmiennych
+CMD ["/bin/sh", "-c", "envsubst '$PORT $BACKEND_URL' < /nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
