@@ -20,13 +20,10 @@ from app.middleware.ddos_protection import DDoSProtectionMiddleware
 limiter = Limiter(key_func=get_remote_address)
 
 # Import all schemas BEFORE importing routers
-# This ensures proper model resolution
 from app.schemas.user import UserCreate, UserResponse, UserProfileUpdate, UserPasswordUpdate
 from app.schemas.case import CaseCreate, Case, CaseUpdate
 from app.schemas.document import Document, DocumentCreate
 from app.schemas.auth import Token, TokenData, UserBase
-
-# No model_rebuild() calls - let Pydantic handle ForwardRef resolution naturally
 
 # Now import routers
 from app.api.v1.endpoints import auth, cases, ai, notifications, messages, users, seed, audit
@@ -41,19 +38,16 @@ async def lifespan(app: FastAPI):
     retries = 5
     while retries > 0:
         try:
-            # Create tables on startup if not testing
             if settings.environment != "TESTING":
                 async with engine.begin() as conn:
                     await conn.run_sync(Base.metadata.create_all)
                     await conn.execute(text("SELECT 1"))
-            break  # Connection successful
+            break
         except (OperationalError, socket.gaierror) as e:
             retries -= 1
-            print(f"Database not ready. Retrying in 5 seconds... ({retries} retries left). Error: {e}")
+            print(f"Database error: {e}. Retrying...")
             await asyncio.sleep(5)
-            
     yield
-    # Shutdown logic: clean up engine connections
     await engine.dispose()
 
 # Create FastAPI app
@@ -64,27 +58,19 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Add rate limiter to app state
+# Add rate limiter
 app.state.limiter = limiter
-
-# Add rate limit exception handler
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Initialize Redis client for DDoS protection (optional)
+# Redis client
 try:
-    redis_client = redis.from_url(
-        settings.redis_url,
-        encoding="utf-8",
-        decode_responses=True
-    )
+    redis_client = redis.from_url(settings.redis_url, encoding="utf-8", decode_responses=True)
 except Exception:
-    # Fallback to in-memory tracking if Redis unavailable
     redis_client = None
 
-# Add DDoS Protection Middleware
+# 1. DDoS Middleware
 app.add_middleware(
-    CORSMiddleware,
-    DDoSProtectionMiddleware, 
+    DDoSProtectionMiddleware,
     redis_client=redis_client,
     trusted_ips=settings.trusted_ips,
     max_violations=settings.ddos_max_violations,
@@ -92,21 +78,22 @@ app.add_middleware(
     violation_window=settings.ddos_window_seconds
 )
 
-# CORS middleware
+# 2. CORS Middleware
+origins = [
+    "https://test-production-bf56f.up.railway.app",
+    "https://twoja-domena-frontendu.up.railway.app",
+    "http://localhost:5173",
+    "http://localhost:3000"
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://backend-production-855a5.up.railway.app",
-        "https://frontend-production-e011.up.railway.app",
-        "http://localhost:5173",
-        "http://localhost:3000",
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"]
+)
 
-
-# API Routers
+# Routers
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
 app.include_router(cases.router, prefix="/api/v1/cases", tags=["cases"])
 app.include_router(ai.router, prefix="/api/v1/ai", tags=["ai"])
@@ -119,9 +106,4 @@ app.include_router(audit.router, prefix="/api/v1/audit", tags=["audit"])
 
 @app.get("/")
 async def root():
-    return {
-        "name": "LexPortal API",
-        "version": "1.0.0",
-        "status": "running",
-        "docs": "/docs"
-    }
+    return {"name": "LexPortal API", "version": "1.0.0", "status": "running"}
