@@ -2,30 +2,31 @@ server {
     listen ${PORT};
     server_name localhost;
 
+    # Lokalizacja plików statycznych Frontendu
     location / {
         root /usr/share/nginx/html;
         index index.html index.htm;
         try_files $uri $uri/ /index.html;
     }
 
+    # Proxy dla API
     location /api {
-        proxy_pass ${BACKEND_URL};
+        # Używamy zmiennej, aby Nginx nie padł, jeśli backend nie odpowie od razu
+        set $backend_url ${BACKEND_URL};
+        proxy_pass $backend_url;
+        
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
 
+        # Resolver dla DNS (wymagany przy używaniu zmiennych w proxy_pass)
+        resolver 127.0.0.11 valid=30s;
+        
         proxy_connect_timeout 60s;
-        proxy_send_timeout 60s;
         proxy_read_timeout 60s;
-    }
-
-    error_page 500 502 503 504 /50x.html;
-    location = /50x.html {
-        root /usr/share/nginx/html;
     }
 }
