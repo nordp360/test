@@ -12,8 +12,16 @@ class Settings(BaseSettings):
     environment: str = "DEVELOPMENT"
 
     # Database & Redis
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/lexportal"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/lexportal"
     redis_url: str = "redis://localhost:6379/0"
+
+    @property
+    def database_url(self) -> str:
+        # Cloud providers like Railway provide URLs starting with postgresql://
+        # asyncpg requires the postgresql+asyncpg:// prefix
+        if self.DATABASE_URL.startswith("postgresql://"):
+            return self.DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return self.DATABASE_URL
 
     # Security
     encryption_key: str = ""
