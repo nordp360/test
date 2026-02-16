@@ -16,10 +16,11 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
 # KONFIGURACJA DLA RAILWAY:
-# 1. Filtrowanie zmiennych envsubst (zapobiega usuwaniu $host, $remote_addr itp. przez Nginx)
-ENV NGINX_ENVSUBST_FILTER='${PORT} ${BACKEND_URL}'
+# Używamy formatu $VAR bez klamerek {} aby uniknąć błędu 'awk: bad regex'
+# Ten filtr sprawi, że envsubst podmieni TYLKO te dwie zmienne.
+ENV NGINX_ENVSUBST_FILTER='$PORT $BACKEND_URL'
 
-# 2. Domyślne wartości
+# Domyślne wartości
 ENV PORT=80
 ENV BACKEND_URL=http://backend:8000
 
