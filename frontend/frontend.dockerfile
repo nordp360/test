@@ -15,9 +15,11 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 # Kopiujemy szablon konfiguracji Nginx
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
-# Konfiguracja zmiennych środowiskowych dla Nginx
-# PORT: port na którym słucha Nginx (Railway go przypisuje)
-# BACKEND_URL: adres API (domyślnie 'backend' w sieci Docker)
+# KONFIGURACJA DLA RAILWAY:
+# 1. Filtrowanie zmiennych envsubst (zapobiega usuwaniu $host, $remote_addr itp. przez Nginx)
+ENV NGINX_ENVSUBST_FILTER='${PORT} ${BACKEND_URL}'
+
+# 2. Domyślne wartości
 ENV PORT=80
 ENV BACKEND_URL=http://backend:8000
 
