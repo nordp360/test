@@ -99,7 +99,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-)
+
 
 # API Routers
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
