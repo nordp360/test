@@ -80,3 +80,8 @@ Zweryfikowano w skrypcie `seed.py`. Poniższe dane są **poprawne** i obecne w k
 | **Klient**             | `jan.kowalski@example.com` | `password123` |
 
 **Uwaga:** Jeśli logowanie nie działa, upewnij się, że skrypt `python seed.py` został uruchomiony, aby napełnić bazę danych tymi użytkownikami.
+
+
+
+
+test-production-bf56f.up.railway.app

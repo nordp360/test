@@ -176,7 +176,6 @@ class DDoSProtectionMiddleware(BaseHTTPMiddleware):
             # Increment violation count
             await self.redis_client.incr(violation_key)
             # Set expiry for violation window
-            # Set expiry for violation window
             await self.redis_client.expire(violation_key, int(self.violation_window.total_seconds()))
         else:
             # In-memory tracking
