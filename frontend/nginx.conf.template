@@ -1,5 +1,5 @@
 server {
-    listen ${PORT} default_server;
+    listen 0.0.0.0:${PORT};
     server_name _;
 
     # Frontend static files
@@ -11,14 +11,13 @@ server {
 
     # API Proxy
     location /api {
-        # Force DNS resolution for external URLs
-        resolver 8.8.8.8 1.1.1.1 valid=10s;
-        
-        # SNI support for HTTPS upstreams (important for Railway public URLs)
+        # Support for HTTPS upstreams
         proxy_ssl_server_name on;
         proxy_ssl_name $proxy_host;
         proxy_ssl_session_reuse off;
-        proxy_ssl_protocols TLSv1.2 TLSv1.3;
+        
+        # Public DNS Resolver
+        resolver 8.8.8.8 1.1.1.1 valid=30s;
 
         proxy_pass ${BACKEND_URL};
         
@@ -31,7 +30,7 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
 
-        # Timeouts
+        # Standard timeouts
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
         proxy_read_timeout 60s;
