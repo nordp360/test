@@ -1,21 +1,24 @@
 server {
-    listen ${PORT};
+    listen ${PORT} default_server;
     server_name _;
 
+    # Frontend static files
     location / {
         root /usr/share/nginx/html;
         index index.html index.htm;
         try_files $uri $uri/ /index.html;
     }
 
+    # API Proxy
     location /api {
-        # SNI Setup - Wymagane dla połączeń HTTPS na Railway
+        # Force DNS resolution for external URLs
+        resolver 8.8.8.8 1.1.1.1 valid=10s;
+        
+        # SNI support for HTTPS upstreams (important for Railway public URLs)
         proxy_ssl_server_name on;
         proxy_ssl_name $proxy_host;
         proxy_ssl_session_reuse off;
-        
-        # Resolver dla DNS (Google + Cloudflare)
-        resolver 8.8.8.8 1.1.1.1 valid=30s;
+        proxy_ssl_protocols TLSv1.2 TLSv1.3;
 
         proxy_pass ${BACKEND_URL};
         
@@ -24,15 +27,19 @@ server {
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $proxy_host;
         proxy_cache_bypass $http_upgrade;
-        
-        # Przekazywanie adresów IP
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
 
-        # Timeouty (ważne dla AI)
+        # Timeouts
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
         proxy_read_timeout 60s;
+    }
+
+    # Health check
+    location /healthz {
+        access_log off;
+        return 200 "OK";
     }
 }
