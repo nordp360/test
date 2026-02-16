@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     port: int = 8000
-    cors_origins: str = "http://localhost:3000"
+    cors_origins: str = "http://localhost:3000,https://test-production-bf56f.up.railway.app"
     environment: str = "DEVELOPMENT"
 
     # Database & Redis
