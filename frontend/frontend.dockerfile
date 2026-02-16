@@ -12,5 +12,6 @@ FROM nginx:stable-alpine
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 # Kopiujemy własną konfigurację Nginx (ważne dla SPA i proxy API)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+ENV PORT 80
 EXPOSE 80
 CMD ["/bin/sh", "-c", "sed -i 's/listen 80;/listen '\"$PORT\"';/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
