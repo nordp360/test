@@ -95,6 +95,8 @@ app.add_middleware(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins.split(","),
+    "https://test-production-bf56f.up.railway.app",
+    "http://localhost:5173",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
