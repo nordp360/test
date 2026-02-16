@@ -12,18 +12,16 @@ FROM nginx:stable-alpine
 # Kopiujemy zbudowane pliki
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Kopiujemy szablon konfiguracji Nginx
-COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+# Kopiujemy szablon konfiguracji
+COPY nginx.conf.template /nginx.conf.template
 
-# KONFIGURACJA DLA RAILWAY:
-# Używamy formatu $VAR bez klamerek {} aby uniknąć błędu 'awk: bad regex'
-# Ten filtr sprawi, że envsubst podmieni TYLKO te dwie zmienne.
-ENV NGINX_ENVSUBST_FILTER='$PORT $BACKEND_URL'
-
-# Domyślne wartości
+# Domyślne wartości zmiennych
 ENV PORT=80
 ENV BACKEND_URL=http://backend:8000
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+# Ręczne wykonanie envsubst gwarantuje, że podmienione zostaną TYLKO nasze zmienne,
+# a zmienne Nginxa ($host, $scheme itp.) pozostaną nienaruszone.
+# Ucieczka \$ zapobiega podstawieniu zmiennych przez powłokę shell przed envsubst.
+CMD ["/bin/sh", "-c", "envsubst '$PORT $BACKEND_URL' < /nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
