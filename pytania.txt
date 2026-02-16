@@ -1,0 +1,692 @@
+1.Ochrona przed DDoS
+⚠️ Status: Wymaga konfiguracji zewnętrznej W kodzie aplikacji (Python) nie wykryto wdrożonego "Rate Limitera" (np. biblioteki slowapi).
+
+Rekomendacja: Aplikacja jest bezpieczna logicznie, ale przed udostępnieniem publicznym należy wdrożyć ograniczenie liczby zapytań na poziomie serwera (np. Nginx, Cloudflare lub API Gateway).
+
+wygeneruj 3 rozne rozwiazanie
+
+2. CZy mozna uzyc szyfrowania  Argon2, w czym on jest lepszy od PBKDF2-SHA256
+
+3. Stopka z dziaami i trescia : LexPortal
+LexPortal to nowoczesna platforma prawna łącząca doświadczenie adwokatów z technologią AI. Oferujemy kompleksową obsługę prawną online, gwarantując bezpieczeństwo, poufność i najwyższy standard merytoryczny.
+
+Usługi
+Dla osób fizycznych
+Dla firm
+Weryfikacja umów
+Cennik i Pakiety
+Firma
+O nas
+Kariera
+Blog prawniczy
+Kontakt
+Bezpieczeństwo
+Szyfrowanie SSL
+Połączenie szyfrowane 256-bit
+Ochrona RODO
+Pełna zgodność przetwarzania
+Płatności
+Autoryzowani operatorzy PayU/Stripe
+© 2026 LexPortal Sp. z o.o. | KRS: 0000000000 | NIP: 000-000-00-00 | REGON: 000000000
+
+Siedziba: ul. Prawnicza 100, 00-001 Warszawa
+
+Regulamin
+Polityka Prywatności
+Klauzula RODO
+Cookies
+© 2026 LexPortal. Wszelkie prawa zastrzeżone.
+
+LexPortal Sp. z o.o. | NIP: 000-000-00-00
+
+Regulamin
+Polityka Prywatności
+RODO
+
+Powinna byc widoczna na kazdej stronie , sekcji i panelu, w caym serwisie 
+
+4. W sekcji poczta w panelu klienta, mozliwosc odpowiadania jest fikcyjna powinna byc wysyana a konta odpowiednich doradcow i operatorow, a przycisk odpowiedz powininen to umozliwiac i zapisywac w bazie danych, 
+
+5. W tym samym okienku pocztu , przycisk : Przekaz dalej powinien umozliwic przekierowanie do odpowiedniegoi klienta poczty  lub strony np gmail lub innych serwisow ktorych uzywa klient, oraz whats up, powinna bycc rowniez mozliwosc eksportu do pdf 
+
+6. Przycisk nowa wiadomosc w tej sekcji nie dziaa , trzeba to naprawic 
+
+7. Terminarz powininen spelniac wymogi funkcjonalnosci jak u w panelu operatorow , czyli miec mozliwosc dodawania i usuwania terminow i nontatek oraz zmiany widokow na : dzien (co godzine) tydzien ( kazdy dzien tygodnia) i miesiac ( wszystkie dni ) 
+
+8. W sekcji terminarz  : kafelek : Potrzebujesz spotkania?
+Umów się na konsultację online lub w biurze.
+
+przycisk : Umów konsultację nie dziala, napraw to aby wyskoczy modal z odpowiednimi polami i dodaj go do bazy danych i teczki klienta
+
+9. sekcja : Płatności i Faktury   : zapisywanie do formatu pdf po kliknieciu wq przycisk PDF nie dzia, napraw to
+
+10. w Ustawieniach w pod sekcji : Bezpieczeństwo : po wpisaniu zmiany hasa i nacisnieciu Zmie haso nic sie nie dzieje, napraw to aby realnie zmienialo haslo w bazie danych 
+
+11. Po zapisabmiu nowych Danych profilowych po wylogowaniu i zalogowaniu powraca do oryginalnych danych, powinno to na stae zaktualizowac dane w  bazie danych, napraw to 
+
+12. w sekcji Pomoc : Centrum Pomocy : Najczęstsze Pytania : dodaj kilkanacie tematow , teraz jest za malo, popraw to
+
+
+13. Formularz Kontaktowy nie wysya wiadomosci po klinieciu wyslij wiadomosc  do operatora i nie zapisuje w bazie danych, wszystkie dane wpisywane maja byc archiwiwzowane i zapisywane w bazie danych oraz widoczne u operatorow i administratora! popraw to koniecznie!
+
+14. W sekcji moje sprawy : w modalu sprawy : Szczegóły Sprawy : Ostatnie dokumenty
+
+Nie ma mozliwosci sciagniecia tych dokumentow , popraw to ,
+
+Historia zmian przycisk tez nie dziala, napraw to 
+
+15. Podaj mi aktualne dane logowania operatora i administratora , 
+
+kafelek : Dostęp testowy:
+
+Admin: admin@lexportal.pl / admin123
+
+Operator: anna.nowak@lexportal.pl / lawyer123
+
+Klient: jan.kowalski@example.com / password123
+
+Dane te nie loguja do paneli zktualizuj go odpowiednimi  kontami 
+
+
+===================================================
+
+
+1. to samo zastosuj do przycisku Baza wiedzy na stronie startowej
+
+
+Locating the 'Baza Wiedzy' button on the starting page to inspect its current colors (text, background, border) and other relevant styles before attempting to change it to blue.
+
+const data = {};
+
+const knowledgeBaseButton = Array.from(document.querySelectorAll('button, a, input[type="button"]'))
+  .find(el => el.textContent.includes('Baza Wiedzy'));
+
+if (knowledgeBaseButton) {
+  data.selector = getSelector(knowledgeBaseButton);
+  data.tagName = knowledgeBaseButton.tagName;
+  data.textContent = knowledgeBaseButton.textContent.trim();
+  const computedStyle = window.getComputedStyle(knowledgeBaseButton);
+  data.currentColor = computedStyle.color;
+  data.backgroundColor = computedStyle.backgroundColor;
+  data.borderColor = computedStyle.borderColor;
+  data.display = computedStyle.display;
+  data.position = computedStyle.position;
+} else {
+  data.error = "Button with text 'Baza Wiedzy' not found.";
+}
+
+function getSelector(el) {
+  if (el.id) {
+    return `#${el.id}`;
+  }
+  let selector = el.tagName.toLowerCase();
+  if (el.className) {
+    selector += `.${Array.from(el.classList).join('.')}`;
+  }
+  return selector;
+}
+
+The "Baza Wiedzy" button is an <a> element with the class bg-gold-500, which sets its background color to gold (rgb(212, 175, 55)). Its text color is white (rgb(255, 255, 255)).
+
+To change it to blue, I will modify the background color and also adjust the shadow-gold-500/20 to shadow-blue-500/20 for a consistent blue theme. I will use a shade of blue similar to what was used for the text "bez wychodzenia z domu" (#3B82F6).
+
+const knowledgeBaseButton = document.querySelector("a.bg-gold-500.hover\:bg-gold-600.text-white.font-bold.py-3\.5.px-8.rounded-lg.transition-all.flex.items-center.justify-center.gap-2.shadow-lg.shadow-gold-500\/20.transform.hover\:-translate-y-0\.5.border.border-transparent.font-sans");
+
+if (knowledgeBaseButton) {
+  // Change background color to blue
+  await setElementStyles(knowledgeBaseButton, {
+    backgroundColor: '#3B82F6' // Tailwind CSS blue-500 equivalent
+  });
+
+  // To also update the shadow, if it's applied via a class, we need to modify the class list.
+  // This assumes 'shadow-gold-500/20' is a utility class that sets the shadow color.
+  // We will replace 'shadow-gold-500/20' with 'shadow-blue-500/20'
+  if (knowledgeBaseButton.classList.contains('shadow-gold-500/20')) {
+    knowledgeBaseButton.classList.remove('shadow-gold-500/20');
+    knowledgeBaseButton.classList.add('shadow-blue-500/20');
+  }
+
+  const newBgColor = window.getComputedStyle(knowledgeBaseButton).backgroundColor;
+  const hasBlueShadow = knowledgeBaseButton.classList.contains('shadow-blue-500/20');
+
+  data = { success: true, newBackgroundColor: newBgColor, shadowUpdated: hasBlueShadow };
+} else {
+  data = { success: false, message: "Could not find the button with text 'Baza Wiedzy'." };
+}
+
+It seems I made an error in constructing the CSS selector for the "Baza Wiedzy" button in the previous step, leading to a querySelector failure. The selector was too long and contained unescaped characters.
+
+I will attempt to select the button using a simpler and more robust selector, relying on the presence of the text "Baza Wiedzy" and common button tags. Then, I will apply the color changes to its background and associated shadow.
+
+const knowledgeBaseButton = Array.from(document.querySelectorAll('button, a'))
+  .find(el => el.textContent.includes('Baza Wiedzy') && window.getComputedStyle(el).backgroundColor.includes('rgb(212, 175, 55)'));
+
+if (knowledgeBaseButton) {
+  // Change background color to blue
+  await setElementStyles(knowledgeBaseButton, {
+    backgroundColor: '#3B82F6' // Tailwind CSS blue-500 equivalent
+  });
+
+  // Handle potential shadow class. If it's a utility class like Tailwind's, direct style might not override it.
+  // It's better to remove the old class and add a new one if class manipulation is supported.
+  // For this environment, we'll assume we can directly manipulate classes if they exist.
+  if (knowledgeBaseButton.classList.contains('shadow-gold-500/20')) {
+    knowledgeBaseButton.classList.remove('shadow-gold-500/20');
+    knowledgeBaseButton.classList.add('shadow-blue-500/20');
+  }
+   if (knowledgeBaseButton.classList.contains('bg-gold-500')) {
+    knowledgeBaseButton.classList.remove('bg-gold-500');
+    knowledgeBaseButton.classList.add('bg-blue-500'); // Assuming a corresponding blue class exists
+  }
+   if (knowledgeBaseButton.classList.contains('hover:bg-gold-600')) {
+    knowledgeBaseButton.classList.remove('hover:bg-gold-600');
+    knowledgeBaseButton.classList.add('hover:bg-blue-600'); // Assuming a corresponding blue hover class exists
+  }
+
+  const newBgColor = window.getComputedStyle(knowledgeBaseButton).backgroundColor;
+  const hasBlueShadowClass = knowledgeBaseButton.classList.contains('shadow-blue-500/20');
+  const hasBlueBgClass = knowledgeBaseButton.classList.contains('bg-blue-500');
+  const hasBlueHoverClass = knowledgeBaseButton.classList.contains('hover:bg-blue-600');
+
+  data = { success: true, newBackgroundColor: newBgColor, shadowClassUpdated: hasBlueShadowClass, bgClassUpdated: hasBlueBgClass, hoverClassUpdated: hasBlueHoverClass };
+} else {
+  data = { success: false, message: "Could not find the button with text 'Baza Wiedzy' and gold background." };
+}
+
+
+2.  strony ze stopki , nie wyswietlaja sie wogole : 
+- http://localhost:3000/#/services/individual
+- http://localhost:3000/#/services/business
+- http://localhost:3000/#/services/contracts
+- http://localhost:3000/#/pricing
+- 
+
+
+strona :
+-http://localhost:3000/#/about nie zasotosowala czcionki Montserrat
+-http://localhost:3000/careers#/blog rowniez nie stosuje Montsrrat
+-http://localhost:3000/careers#/contact rowniez nie stosuje Montserrat
+
+3. w Panelu klienta stopka wyswietla sie podwojnie, popraw to 
+
+4. w panelu admina , komunikat powitalny wita "Witaj kliencie" powinno "Witaj  Administratorze"
+Dodatkowo w Panelu admninstratora w Navbarze w Header powinine wyswietlac sie przycisk - odnosnik o tytule Panel administratora i odsylac do panelu administratora a nie "Panel klienta" ktory odsya do panelu klienta - to powazny blad, popraw to.
+
+5. W panelu operatora w polu formularza czcionka - wprowadzany tekst jest nie wioczny wyblakly, popraw to na bardziej widoczny 
+
+6.  w Sekcji lienci w panelu operatora - po kliknieciu w szczegoly w podsekcji Akcje , przycisk usun klienta z mozliwoscia przywrocenia nie dziala, popraw to
+dodatkowo : pod sekcja sprawy w sekcji klienci ma wyblakly kolor nie widac ile spraw jest aktywnych, popraw to na lepsza widocznosc 
+
+7. Wysyanie do podpisu powinno realnie dzialac a nie fikcyjnie, zaimplemetuj to 
+
+8. Po kliknieciu Asystent Ai w Szczegolach Sprawy Asysten AI nie pojawia sie z kontekstem zapytania tylko znika  kolor przycisku, ma to byc realne dzialanie 
+
+9. w dalszym ciagu w sekcji poczta nie ma mozliwosci przekazania dalej wiadomosci  oraz po kliknieciu odpisz wiadomosc nie dochodzi do adresata tylko symuluje dziaanie, ma to dziaac perfekt! 
+Dodatkow jesli przeczytaem wiadomosc grubosc czcionki powinna renderowac sie jako przeczytana 
+
+W modalu odpowiedz cziocnka jest wyblakla i nie czyelna popraw to 
+
+GLOBALNIE pamietaj ze w ciemnych motywach przegladarek trzeba odwraca kolory  a w jasnych stosowac ciemne
+
+Mozliwosc pobierania wiadomosci z poczty nie dziala jako pdf, popraw to 
+
+
+
+==========================================================
+
+
+
+1. Dodaj przelacznik trybow jasny/ciemny w postaci sonca/ksiezyca obok ikonki  avatara w prawym gornym roku. MA DZIALAC przelaczenie- teraz nie dziala
+
+2. W aktualnym trybie , niektore znaki sa nie widoczne w trybie ciemnym sproboj poprawic czytelnosc wszedzie gdzie to mozliwe.
+
+3. Zrob wszystkie mozliwe testy : dla front endu i backednu - utworz plik TESTY_FRONT.md i TESTY_BACK.md   oraz skrypty startowe :
+- Wymien wszystie mozliwy testy dla aplikacji fullstack (front TSX, Back - python , fast api, postgresql) - automatyczne, jednostkowe, regresji, uzytkownika, e2e , playwright, przegladarkowe, symulacje zachowan uzytkownika
+Badz profesjonalny najbardziej jak to mozliwe :
+
+Oto kompletna lista rodzajów testów podzielona na kategorie:
+1. Testy Jednostkowe (Unit Tests)
+Sprawdzają najmniejsze elementy aplikacji w izolacji (bez bazy danych i sieci).
+Backend (Python/FastAPI): Testowanie logiki biznesowej, walidacji modeli Pydantic, funkcji pomocniczych (utils).
+Narzędzia: pytest, unittest.
+Frontend (TSX): Testowanie pojedynczych komponentów React/Next.js, funkcji formatujących, reducerów (Redux/Zustand) czy hooków.
+Narzędzia: Vitest, Jest, React Testing Library.
+2. Testy Integracyjne (Integration Tests)
+Sprawdzają, czy różne moduły współpracują ze sobą poprawnie.
+Backend + Baza Danych: Testowanie czy zapytania SQL (SQLAlchemy/SQLModel) poprawnie zapisują i odczytują dane z PostgreSQL (często z użyciem bazy testowej w Dockerze).
+API Integration: Testowanie konkretnych endpointów FastAPI za pomocą TestClient. Sprawdza statusy (200, 404, 422) i strukturę JSON.
+Frontend + Store: Sprawdzanie, czy komponenty poprawnie komunikują się z systemem zarządzania stanem.
+3. Testy End-to-End (E2E) – Playwright
+Symulują pełną ścieżkę użytkownika od przeglądarki do bazy danych.
+Testy przepływu (Happy Path): Np. "Użytkownik rejestruje się -> odbiera maila -> loguje się -> dodaje produkt do koszyka".
+Testy negatywne: Próba włamania, wpisanie błędnych danych w formularze.
+Cross-browser: Uruchamianie testów na Chromium, Firefox i WebKit (Safari) jednocześnie.
+Emulacja urządzeń mobilnych: Sprawdzanie, jak aplikacja działa na iPhone czy Androidzie (wbudowane w Playwright).
+4. Testy Przeglądarkowe i Wizualne (Visual Regression)
+Koncentrują się na tym, co widzi oko.
+Snapshot Testing: Porównywanie kodu HTML/JSON komponentu z poprzednią wersją.
+Visual Comparison (Pixel-by-pixel): Playwright robi screenshoty strony i porównuje je z "wzorcem", aby wykryć, czy np. przycisk nie przesunął się o 2 piksele (Narzędzia: Playwright Screenshots, Percy, Applitools).
+5. Symulacje zachowań użytkownika
+Wykraczają poza standardowe klikanie.
+Testy dostępności (Accessibility/A11y): Sprawdzanie, czy osoba niewidoma może obsłużyć aplikację czytnikiem ekranu.
+Narzędzia: axe-core zintegrowane z Playwright.
+Monkey Testing / Chaos Testing: Automatyczne klikanie w losowe miejsca na ekranie z dużą prędkością, aby sprawdzić, czy aplikacja "nie wywali się" przy nieprzewidzianych akcjach.
+6. Testy Wydajnościowe i Obciążeniowe (Performance & Load)
+Sprawdzają granice wytrzymałości aplikacji.
+Load Testing: Jak FastAPI i PostgreSQL radzą sobie przy 1000 użytkowników naraz?
+Stress Testing: Przy jakiej liczbie żądań serwer przestanie odpowiadać?
+Narzędzia: Locust (świetny dla Pythonistów), k6.
+7. Testy Bezpieczeństwa (Security Tests)
+Testy API: Sprawdzanie, czy użytkownik A może edytować dane użytkownika B (IDOR).
+SQL Injection / XSS: Próba wstrzyknięcia złośliwego kodu przez formularze TSX lub query params w FastAPI.
+Skanowanie zależności: Szukanie luk w bibliotekach z npm i pip.
+Narzędzia: Snyk, Bandit (dla Pythona), OWASP ZAP.
+8. Testy Regresji (Regression Testing)
+To nie jest oddzielna technika, a proces.
+Polega na ponownym uruchomieniu wszystkich powyższych testów (Unit, Integration, E2E) po każdej zmianie w kodzie, aby upewnić się, że naprawienie jednego błędu nie zepsuło innej funkcjonalności.
+9. Testy Akceptacyjne Użytkownika (UAT)
+Manualne: Prowadzone przez testerów QA lub klienta na wersji stagingowej. Sprawdzają zgodność z wymaganiami biznesowymi ("czy to, co zbudowaliśmy, to faktycznie to, co klient chciał?").
+10. Smoke Tests ("Testy dymne")
+Bardzo krótki zestaw testów E2E uruchamiany zaraz po deployu na produkcję, sprawdzający tylko krytyczne funkcje (np. czy strona główna w ogóle się ładuje).
+Rekomendowany "Stos Testowy" dla Twojej aplikacji:
+Backend: pytest (Unit + Integration).
+Frontend: Vitest + React Testing Library (Unit).
+E2E: Playwright (TSX) – to tutaj zrobisz najwięcej symulacji zachowań użytkownika.
+Kontrola Bazy: Testcontainers (Python) do uruchamiania świeżego PostgreSQL w Dockerze na czas testów.
+CI/CD: GitHub Actions (automatyczne uruchamianie wszystkiego przy każdym Pull Requeście).
+
+
+4. W panelu klienta. w sekcji Terminarz nie ma mozliwosci edycji kalendarza ( dodawania, archiwizowania, przywracania, ususwania - wydarze ) przycisk  z google nie zia 
+
+5. dodaj profesjonalna walidacje formulaerzy REGEX itp, itd 
+
+6 Po kliknieciu Najczęściej wyszukiwane tematy, danego tematu, przenos na dol strony do wyswietlonych tematow w sekcji BAZA WIEDZY
+
+7. 
+Płatna Promocja & Content
+
+- Pobierz checklistę wdrożenia
+- Zobacz plan kampanii SEO (90 dni)
+
+Te dwa przyciski nie dzialaja, przenosza na strone gowna,
+
+zaimplementuj pobieranie listy w formacie pdf, czyli caej strony Materialy projektowe w kolorach
+
+Wygeneruj profesjonalny plan kampanii SEO na 90 dni 
+
+ale tylko w panelu operatora
+
+Ukryj ten przycisk w panelu klienta
+
+8. W polu logowanie, w polu Haso dodaj przycisk, ikonke mozliwosci odkrywania wpisywania hasla 
+
+9. Przycisk "Nie pamietasz hasa nie dziala" stworz dedykowany modal-formularz odzyskiwania hasla 
+
+Wszystko do tej pory wymienione ma byc polaczone z backendem i baza danych
+
+10. w panelu - Przekaz , sprobuj uzyc klienta poczty, lub przekieruj na napisz wiadomosc na koncie gmail w przegladarce
+
+11.  w sekcji Klient po klinkieciu w szczegloy, po usunieciu klienta, dodaj mozlwisoc przywrocenia do stany aktywny , oraz mozliwosc wyslania powiadomienia w modalu o przyczynach decyzji
+
+12.  Rozwin Panel operatora ododatkowe sekcje i funkcje oraz mozliwosc komunikacji z operatorem i przywroc Bezpieczny czat z klientami dwu kierunkowy i realny z mozliwoscia zapisu w bazie danych - datami i godzinami wysylanych wiadomosci i odpowiednia dopasowana kolorem cziconki do trybu wyswietlania i przegladarek
+
+13.popraw przejscie w panelu operatora , poniewaz po kliknieciu w HEADER w glowna sekcje Panel klienta przenosi mnie do panelu klienta anie sekcji wylogowywania operatora - koniecznie!
+
+14. Rozwin panel Administracyjny :
+
+Przeglad - powinien pokazywac wiecej, realnych bardziej szczegolowych statystyk i predykcji 
+- slupki powinny byc opisane liczbami i po najechaniu i etykietami na osi x i y
+- 
+
+15. Rejestr Faktur
+Historia płatności i dokumenty sprzedażowe.
+
+Generuj
+Eksportuj CSV
+
+w tej sekcji - Faktury & Platnosci - przycisk generuj ma przeniesc do modala generujacego fakture na podstawie przeslanego pliku lub wprowadzenego tekstu w przygotowane pola tekstowe
+
+- eksportuj do csv ma dzialac jak i eksportuj do pdf dodaj 
+
+PObierz ikonka tez nie dziala powinna dzialac tak samo jak zarchiwizuj/przyroc 
+
+WSZYSTKO ma byc zapisywane w  bazie danych
+
+- przycisk nowa kampania ma otwierac bardzo rozbudowany modal z funkcja przeniesienia do popularnych serwisow kampaniowych typu google ads i innych
+
+15. W sekcji Konfiguracja API 
+w okienku  - Konfiguracja API i Integracje
+
+Dodaj :
+
+- pole wpisywania kluczy dla 
+
+- Digital ocean droplets
+
+- Google ADS -
+
+- Google Analytics 
+
+- DATABASE_UR
+
+- REDIS_URL
+
+- ENCRYPTION_KEY
+
+- JWT_SECRET
+
+- ALGORITHM=HS256
+
+- ALGORITHM
+
+- CORS_ORIGINS
+
+=====================================================
+
+
+1. Przycisk zmiany motywy jasny/ciemny : 
+
+<button class="p-2 rounded-full text-slate-400 hover:text-slate-500 hover:bg-slate-50 transition-colors" title="Przełącz na tryb jasny"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun h-6 w-6" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg></button>
+
+NIE DZIALA, popraw to :
+
+Oto Ultra-Profesjonalny Master Prompt (w języku angielskim, ponieważ modele AI generują lepszy kod techniczy po angielsku), który możesz wkleić do Google AI Studio (Gemini 1.5 Pro / Antigravity).
+
+Ten prompt obejmuje wszystkie Twoje wymagania: od poprawy UI, przez Backend, aż po CI/CD i wdrożenie na DigitalOcean.
+
+🚀 MASTER PROMPT (Skopiuj i wklej to do AI)
+code
+Text
+download
+content_copy
+expand_less
+ACT AS: Senior Fullstack Software Architect & DevOps Engineer.
+STACK: React (TypeScript, Vite/Next.js), Tailwind CSS, Python 3.12+ (FastAPI), PostgreSQL (SQLAlchemy/SQLModel), Docker, Nginx.
+
+CONTEXT:
+I am refactoring a production-grade application. The code must adhere to SOLID principles, use strict typing, and implement comprehensive testing. I need you to generate code, configuration files, and documentation for the following Critical Modules.
+
+### MODULE 1: UI/UX & THEME ENGINE
+1.  **Dark/Light Mode:**
+    - Create a `ThemeContext.tsx` with persistence to `localStorage`.
+    - Implement a toggle component in the Header (Sun/Moon icons) next to the Avatar.
+    - **CRITICAL:** Fix contrast issues. Ensure all text colors use Tailwind semantic classes (e.g., `text-slate-900 dark:text-slate-100`) instead of hardcoded black/white.
+2.  **Accessibility (A11y):**
+    - Ensure all buttons and inputs have `aria-labels`.
+    - Verify WCAG 2.1 contrast compliance for the Dark Mode palette.
+
+### MODULE 2: AUTHENTICATION & SECURITY forms
+1.  **Form Validation:**
+    - Frontend: Implement `Zod` schemas for Login, Register, and Profile forms.
+    - Backend: Implement `Pydantic` models with Regex for:
+      - Email (RFC 5322 standard).
+      - Password (min 8 chars, 1 uppercase, 1 number, 1 special char).
+      - Phone number (international format).
+2.  **UX Enhancements:**
+    - Add a "Show/Hide Password" toggle (Eye/Eye-Off icon) in the input field.
+    - Create a "Forgot Password" Modal that triggers a backend email flow (simulate email sending for now).
+
+### MODULE 3: OPERATOR PANEL & REAL-TIME CHAT
+1.  **Navigation Logic:**
+    - Fix the Header routing: Clicking "Logo/Home" while in `Operator Role` must NOT redirect to Client Dashboard. It should go to Operator Dashboard.
+2.  **Secure WebSocket Chat:**
+    - **Backend:** Create a `ConnectionManager` class in FastAPI to handle WebSocket connections.
+    - **Database:** Define a `Message` model (id, sender_id, receiver_id, content, timestamp) to persist chat history in PostgreSQL.
+    - **Frontend:** Build a Chat Component with:
+      - Real-time updates.
+      - Auto-reconnect logic.
+      - Distinct message bubble colors for Operator vs. Client (responsive to Dark Mode).
+
+### MODULE 4: ADMIN DASHBOARD & FINANCE
+1.  **Analytics:**
+    - Create a Dashboard with `Recharts` library.
+    - Charts must have X/Y axis labels, Tooltips with exact numbers, and responsive sizing.
+2.  **Invoices Module:**
+    - **Modal:** Create a "Generate Invoice" modal accepting File Upload or Manual Data Entry.
+    - **Export:** Implement endpoints to:
+      - Export Table to CSV (`StreamingResponse`).
+      - Generate PDF invoice (using `ReportLab` or `WeasyPrint`).
+    - **CRUD:** Archive, Restore, and Delete invoice logic connected to DB.
+
+### MODULE 5: API & SYSTEM CONFIGURATION
+1.  **Settings UI:**
+    - Create a secure form to manage system secrets:
+      - `DIGITAL_OCEAN_KEY`, `GOOGLE_ADS_KEY`, `DATABASE_URL`, `REDIS_URL`, `JWT_SECRET`, `CORS_ORIGINS`.
+    - Inputs must be masked (type="password") with a "Reveal" button.
+    - Data must be encrypted before saving to the DB (using `cryptography.fernet`).
+
+### MODULE 6: CI/CD & DEPLOYMENT (Digital Ocean)
+1.  **GitHub Actions:**
+    - Create `.github/workflows/main.yml` for:
+      - Linting (Ruff/Eslint).
+      - Testing (Pytest + Vitest).
+      - Building Docker Images.
+      - Deploying via SSH to Digital Ocean Droplet.
+2.  **Docker Production Setup:**
+    - Create `Dockerfile` (multi-stage build for React & Python).
+    - Create `docker-compose.prod.yml` including:
+      - FastAPI (Gunicorn worker class).
+      - PostgreSQL (tuned for production).
+      - Nginx (Reverse Proxy with SSL setup).
+3.  **Database:**
+    - Provide a script to initialize PostgreSQL with a secure user and production-ready connection pooling (using `PgBouncer` or SQLAlchemy internal pooling).
+
+### DELIVERABLES:
+- Full code for modified React Components.
+- FastAPI Routes and Pydantic Models.
+- `docker-compose.yml` and `Dockerfile`.
+- `TESTY_FRONT.md` and `TESTY_BACK.md` content.
+- Deployment Shell Scripts.
+
+Please proceed step-by-step, starting with Module 1 and 2.
+Rozwiązanie Techniczne (Twoje punkty 1-5 + Deployment)
+
+Poniżej przygotowałem gotowe fragmenty kodu, które AI wygeneruje na podstawie powyższego promptu. Możesz je wdrożyć od razu.
+
+1. Przełącznik Dark Mode (React + Tailwind)
+
+Plik: frontend/src/context/ThemeContext.tsx
+
+code
+Tsx
+download
+content_copy
+expand_less
+import React, { createContext, useContext, useEffect, useState } from 'react';
+
+type Theme = 'light' | 'dark';
+const ThemeContext = createContext<{ theme: Theme; toggleTheme: () => void } | undefined>(undefined);
+
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('theme') as Theme) || 'light';
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+};
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error('useTheme must be used within a ThemeProvider');
+  return context;
+};
+
+Instalacja: Owiń aplikację w <ThemeProvider> w pliku main.tsx.
+
+2. Walidacja Formularzy (Backend Pydantic)
+
+Plik: backend/app/schemas/user.py
+
+code
+Python
+download
+content_copy
+expand_less
+from pydantic import BaseModel, EmailStr, Field, field_validator
+import re
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str = Field(..., min_length=8, description="Hasło musi mieć min. 8 znaków, cyfrę i znak specjalny")
+    phone: str = Field(..., pattern=r"^\+?[1-9]\d{1,14}$")
+
+    @field_validator('password')
+    @classmethod
+    def validate_password_strength(cls, v):
+        if not re.search(r"\d", v):
+            raise ValueError('Hasło musi zawierać cyfrę')
+        if not re.search(r"[A-Z]", v):
+            raise ValueError('Hasło musi zawierać wielką literę')
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", v):
+            raise ValueError('Hasło musi zawierać znak specjalny')
+        return v
+3. Bezpieczny Czat (WebSocket Backend)
+
+Plik: backend/app/websockets/manager.py
+
+code
+Python
+download
+content_copy
+expand_less
+from fastapi import WebSocket
+from typing import List, Dict
+
+class ConnectionManager:
+    def __init__(self):
+        # Przechowuje aktywne połączenia: {user_id: WebSocket}
+        self.active_connections: Dict[int, WebSocket] = {}
+
+    async def connect(self, websocket: WebSocket, user_id: int):
+        await websocket.accept()
+        self.active_connections[user_id] = websocket
+
+    def disconnect(self, user_id: int):
+        if user_id in self.active_connections:
+            del self.active_connections[user_id]
+
+    async def send_personal_message(self, message: str, user_id: int):
+        if user_id in self.active_connections:
+            await self.active_connections[user_id].send_text(message)
+            
+manager = ConnectionManager()
+4. CI/CD - GitHub Actions (Deployment na DigitalOcean)
+
+Plik: .github/workflows/deploy.yml
+
+code
+Yaml
+download
+content_copy
+expand_less
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - name: Install Dependencies & Test Backend
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          pytest
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Digital Ocean via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          script: |
+            cd /home/app/AntigravityProject
+            git pull origin main
+            docker-compose -f docker-compose.prod.yml up -d --build
+5. Instrukcja Połączenia Profesjonalnej Bazy (PostgreSQL na Dockerze)
+
+Aby baza była "profesjonalna" i bezpieczna, nie używaj domyślnego postgres:latest bez konfiguracji.
+
+Plik: docker-compose.prod.yml (sekcja db)
+
+code
+Yaml
+download
+content_copy
+expand_less
+db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # Optymalizacja pod produkcję (tuning pamięci)
+    command: postgres -c shared_buffers=256MB -c max_connections=200
+    networks:
+      - app_network
+
+  # PgBouncer do zarządzania pulą połączeń (niezbędne przy dużym ruchu)
+  pgbouncer:
+    image: edoburu/pgbouncer
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: db
+    ports:
+      - "5432:5432"
+    depends_on:
+      - db
+    networks:
+      - app_network
+Instrukcja Wdrożenia (Deployment Guide)
+
+DigitalOcean Droplet:
+
+Utwórz Droplet (Ubuntu 22.04, min. 2GB RAM).
+
+Zaloguj się przez SSH: ssh root@twoje_ip.
+
+Zainstaluj Docker i Docker Compose.
+
+Konfiguracja HTTPS (Nginx + Certbot):
+
+W projekcie utwórz katalog nginx/conf.d/app.conf.
+
+Użyj obrazu nginx:alpine w docker-compose jako "front" dla świata.
+
+Uruchom certbot wewnątrz kontenera, aby wygenerować darmowe certyfikaty SSL (Let's Encrypt).
+
+Zmienne Środowiskowe (.env):
+
+Na serwerze utwórz plik .env i wklej tam wszystkie klucze (SECRET_KEY, DB_PASSWORD). Nigdy nie wysyłaj pliku .env do GitHub!
+
+wygeneruj teraz szczegółowy plik konfiguracyjny dla Nginx (reverse proxy), który obsłuży zarówno Frontend, API jak i WebSockety na jednym porcie (443)
+
+
+=============================================

@@ -1,0 +1,8 @@
+{
+  "name": "LexPortal - Legal Tech Platform",
+  "description": "A modern legal services platform allowing clients to purchase document templates, subscribe to legal services, and utilize an AI legal assistant for drafting. Includes resources for SEO and marketing strategies.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

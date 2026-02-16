@@ -1,0 +1,17 @@
+# Ignore the virtual environment directory
+.venv/
+
+# Ignore Python cache files
+__pycache__/
+
+# Ignore frontend node modules
+frontend/node_modules
+
+# Ignore backend pytest cache
+backend/.pytest_cache
+
+# Ignore backend virtual environment
+backend/.venv
+
+.git/
+

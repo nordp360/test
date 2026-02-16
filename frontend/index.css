@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy-900: #0f172a;
+  --color-navy-800: #1e293b;
+
+  --color-gold-500: #d4af37;
+  --color-gold-600: #b4941f;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 transition-colors duration-200;
+  }
+
+  /* Dark mode overrides using Tailwind's variant mechanism */
+  /* We use the .dark class on the html element (set by ThemeContext) */
+  :root.dark body {
+    @apply bg-slate-900 text-slate-100;
+  }
+}
+
+@layer utilities {
+
+  /* Custom utilities if needed */
+  .text-gold {
+    @apply text-gold-500;
+  }
+}
+
+/* Print styles */
+@media print {
+  @page {
+    margin: 0;
+  }
+
+  body {
+    margin: 1.6cm;
+    background: white;
+    color: black;
+  }
+
+  /* Hide UI elements */
+  nav,
+  footer,
+  button,
+  .no-print,
+  aside {
+    display: none !important;
+  }
+
+  /* Show Print Area */
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+
+  .print-area {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    background: white;
+  }
+}
