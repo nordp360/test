@@ -13,7 +13,9 @@ backend/.pytest_cache
 # Ignore backend virtual environment
 backend/.venv
 
+# Ignore git
 .git/
 
+# Ignore vscode
 .vscode/
 
