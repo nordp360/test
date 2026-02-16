@@ -1,38 +1,26 @@
-server {
-    listen ${PORT};
-    server_name _;
+# Etap 1: Budowanie
+FROM node:20-alpine AS build-stage
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-    location / {
-        root /usr/share/nginx/html;
-        index index.html index.htm;
-        try_files $uri $uri/ /index.html;
-    }
+# Etap 2: Serwowanie (Nginx)
+FROM nginx:stable-alpine
 
-    location /api {
-        # SNI Setup - Wymagane dla połączeń HTTPS na Railway
-        proxy_ssl_server_name on;
-        proxy_ssl_name $proxy_host;
-        proxy_ssl_session_reuse off;
-        
-        # Resolver dla DNS (Google + Cloudflare)
-        resolver 8.8.8.8 1.1.1.1 valid=30s;
+# Kopiujemy zbudowane pliki
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-        proxy_pass ${BACKEND_URL};
-        
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $proxy_host;
-        proxy_cache_bypass $http_upgrade;
-        
-        # Przekazywanie adresów IP
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+# Kopiujemy szablon konfiguracji
+COPY nginx.conf.template /nginx.conf.template
 
-        # Timeouty (ważne dla AI)
-        proxy_connect_timeout 60s;
-        proxy_send_timeout 60s;
-        proxy_read_timeout 60s;
-    }
-}
+# Ustawienia dla Railway
+ENV NGINX_ENVSUBST_FILTER='$PORT $BACKEND_URL'
+ENV PORT=80
+ENV BACKEND_URL=http://backend:8000
+
+EXPOSE 80
+
+# Start z podmianą zmiennych
+CMD ["/bin/sh", "-c", "envsubst '$PORT $BACKEND_URL' < /nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
