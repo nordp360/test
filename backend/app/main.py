@@ -7,6 +7,10 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from slowapi import _rate_limit_exceeded_handler
 import redis.asyncio as redis
+import asyncio
+import socket
+from sqlalchemy import text
+from sqlalchemy.exc import OperationalError
 
 from app.core.config import settings
 from app.middleware.ddos_protection import DDoSProtectionMiddleware
@@ -33,12 +37,24 @@ from app.db.models import Base
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Create tables on startup if not testing
-    if settings.environment != "TESTING":
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
+    # Retry logic for database connection on startup
+    retries = 5
+    while retries > 0:
+        try:
+            # Create tables on startup if not testing
+            if settings.environment != "TESTING":
+                async with engine.begin() as conn:
+                    await conn.run_sync(Base.metadata.create_all)
+                    await conn.execute(text("SELECT 1"))
+            break  # Connection successful
+        except (OperationalError, socket.gaierror) as e:
+            retries -= 1
+            print(f"Database not ready. Retrying in 5 seconds... ({retries} retries left). Error: {e}")
+            await asyncio.sleep(5)
+            
     yield
-    # Shutdown logic if any
+    # Shutdown logic: clean up engine connections
+    await engine.dispose()
 
 # Create FastAPI app
 app = FastAPI(
