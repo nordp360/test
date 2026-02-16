@@ -25,4 +25,4 @@ EXPOSE 80
 ENTRYPOINT []
 
 # Ręczne wykonanie envsubst i uruchomienie Nginxa
-CMD ["/bin/sh", "-c", "envsubst '$PORT $BACKEND_URL' < /nginx.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"]
