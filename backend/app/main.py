@@ -93,12 +93,16 @@ app.add_middleware(
 
 # CORS middleware
 app.add_middleware(
-    CORSMiddleware,  # <--- This was missing
-    allow_origins=["*"],
+    CORSMiddleware,
+    allow_origins=[
+        "https://backend-production-855a5.up.railway.app",
+        "https://frontend-production-e011.up.railway.app",
+        "http://localhost:5173",
+        "http://localhost:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
 
 
 # API Routers
