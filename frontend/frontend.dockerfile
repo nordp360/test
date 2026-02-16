@@ -8,9 +8,19 @@ RUN npm run build
 
 # Etap 2: Serwowanie (Nginx)
 FROM nginx:stable-alpine
+
 # Kopiujemy zbudowane pliki
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-# Kopiujemy własną konfigurację Nginx (ważne dla SPA i proxy API)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Kopiujemy szablon konfiguracji Nginx
+# Nginx w Dockerze automatycznie przetwarza pliki .template z /etc/nginx/templates/
+# i wstawia zmienne środowiskowe do plików wynikowych w /etc/nginx/conf.d/
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+
+# Ustawiamy domyślny port na wypadek braku zmiennej PORT
+ENV PORT=80
+
 EXPOSE 80
-CMD ["/bin/sh", "-c", "sed -i 's|listen 80;|listen '\"$PORT\"';|g' /etc/nginx/conf.d/default.conf && sed -i 's|BACKEND_URL_PLACEHOLDER|'\"$VITE_API_URL\"'|g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+
+# Nginx obraz automatycznie obsłuży envsubst dla nas przed startem
+CMD ["nginx", "-g", "daemon off;"]
