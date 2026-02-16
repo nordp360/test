@@ -93,10 +93,11 @@ app.add_middleware(
 
 # CORS middleware
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings=[
-    "https://test-production-bf56f.up.railway.app",
-    "http://localhost:5173",
+   allow_origins=[
+        "https://test-production-bf56f.up.railway.app",
+        "https://twoja-domena-frontendu.up.railway.app",
+        "http://localhost:5173",
+        "http://localhost:3000",
     ],
     allow_credentials=True,
     allow_methods=["*"],
